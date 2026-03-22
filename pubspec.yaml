@@ -1,0 +1,11 @@
+name: mobile_calculator
+description: A Flutter mobile calculator app.
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^5.0.0
+  math_expressions: ^2.3.0
+flutter:
+  uses-material-design: true
