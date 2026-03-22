@@ -1,0 +1,22 @@
+{
+  "@@locale": "de",
+  "appTitle": "Mobiler Rechner",
+  "calculatorTitle": "Rechner",
+  "historyTooltip": "Verlauf",
+  "scientificTooltip": "Wissenschaftlich",
+  "settingsTooltip": "Einstellungen",
+  "scientificCalculatorTitle": "Wissenschaftlicher Rechner",
+  "settingsTitle": "Einstellungen",
+  "darkMode": "Dunkelmodus",
+  "calculationHistoryTitle": "Rechenverlauf",
+  "historyItems": "{count, plural, one{1 Eintrag} other{{count} Eintraege}}",
+  "@historyItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noHistoryYet": "Noch kein Verlauf",
+  "historyWillAppear": "Deine Berechnungen erscheinen hier."
+}

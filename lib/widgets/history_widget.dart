@@ -3,32 +3,29 @@ import 'package:flutter/material.dart';
 class HistoryWidget extends StatelessWidget {
   final List<String> history;
 
-  HistoryWidget({required this.history});
+  const HistoryWidget({Key? key, required this.history}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
             'Calculation History',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16.0),
-          Expanded(
-            child: ListView.builder(
-              itemCount: history.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(history[index]),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: history.length,
+          itemBuilder: (context, index) {
+            return ListTile(title: Text(history[index]));
+          },
+        ),
+      ],
     );
   }
 }

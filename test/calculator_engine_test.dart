@@ -1,31 +1,56 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_calculator/utils/calculator_engine.dart';
 
 void main() {
-  group('Calculator Engine Tests', () {
-    test('Addition Test', () {
-      expect(add(2, 3), 5);
+  late CalculatorEngine engine;
+
+  setUp(() {
+    engine = CalculatorEngine();
+  });
+
+  group('CalculatorEngine Tests', () {
+    test('Addition', () {
+      expect(engine.add(2, 3), 5);
     });
-    test('Subtraction Test', () {
-      expect(subtract(5, 3), 2);
+
+    test('Subtraction', () {
+      expect(engine.subtract(5, 3), 2);
     });
-    test('Multiplication Test', () {
-      expect(multiply(2, 3), 6);
+
+    test('Multiplication', () {
+      expect(engine.multiply(2, 3), 6);
     });
-    test('Division Test', () {
-      expect(divide(6, 2), 3);
+
+    test('Division', () {
+      expect(engine.divide(6, 2), 3);
     });
-    test('Division by Zero', () {
-      expect(() => divide(6, 0), throwsA(isA<DivisionByZeroException>()));
+
+    test('Division by zero throws ArgumentError', () {
+      expect(() => engine.divide(6, 0), throwsA(isA<ArgumentError>()));
+    });
+
+    test('Power', () {
+      expect(engine.power(2, 10), 1024);
+    });
+
+    test('Square root', () {
+      expect(engine.sqrt(9), 3);
+    });
+
+    test('Square root of negative throws ArgumentError', () {
+      expect(() => engine.sqrt(-1), throwsA(isA<ArgumentError>()));
+    });
+
+    test('Sine of 0', () {
+      expect(engine.sine(0), 0);
+    });
+
+    test('Cosine of 0', () {
+      expect(engine.cosine(0), 1);
+    });
+
+    test('Degrees to radians', () {
+      expect(engine.degreesToRadians(180), closeTo(3.14159, 0.0001));
     });
   });
 }
-
-int add(int a, int b) => a + b;
-int subtract(int a, int b) => a - b;
-int multiply(int a, int b) => a * b;
-int divide(int a, int b) {
-  if (b == 0) throw DivisionByZeroException();
-  return a ~/ b;
-}
-
-class DivisionByZeroException implements Exception {}

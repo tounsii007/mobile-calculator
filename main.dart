@@ -1,26 +1,4 @@
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mobile Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Mobile Calculator'),
-        ),
-        body: Center(
-          child: Text('Welcome to Mobile Calculator!'),
-        ),
-      ),
-    );
-  }
-}
+// Flutter entry point is lib/main.dart
+// Run with: flutter run
+//
+// This file is kept for reference. The actual app entry point is lib/main.dart.

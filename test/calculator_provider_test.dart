@@ -3,39 +3,62 @@ import 'package:mobile_calculator/providers/calculator_provider.dart';
 
 void main() {
   group('CalculatorProvider', () {
-    late CalculatorProvider calculatorProvider;
+    late CalculatorProvider provider;
 
     setUp(() {
-      calculatorProvider = CalculatorProvider();
+      provider = CalculatorProvider();
     });
 
-    test('initial value should be 0', () {
-      expect(calculatorProvider.result, 0);
+    test('initial result should be 0', () {
+      expect(provider.result, '0');
+      expect(provider.expression, '');
     });
 
-    test('addition works correctly', () {
-      calculatorProvider.add(5);
-      calculatorProvider.add(3);
-      expect(calculatorProvider.result, 8);
+    test('input appends to expression', () {
+      provider.input('5');
+      provider.input('+');
+      provider.input('3');
+      expect(provider.expression, '5+3');
     });
 
-    test('subtraction works correctly', () {
-      calculatorProvider.subtract(5);
-      expect(calculatorProvider.result, -5);
+    test('calculate evaluates expression', () {
+      provider.input('5');
+      provider.input('+');
+      provider.input('3');
+      provider.calculate();
+      expect(provider.result, '8');
+      expect(provider.expression, '');
     });
 
-    test('multiplication works correctly', () {
-      calculatorProvider.multiply(5);
-      expect(calculatorProvider.result, 0); // initial value is 0
-      calculatorProvider.add(2);
-      calculatorProvider.multiply(3);
-      expect(calculatorProvider.result, 6);
+    test('clear resets state', () {
+      provider.input('9');
+      provider.clear();
+      expect(provider.result, '0');
+      expect(provider.expression, '');
     });
 
-    test('division works correctly', () {
-      calculatorProvider.add(6);
-      calculatorProvider.divide(3);
-      expect(calculatorProvider.result, 2);
+    test('backspace removes last character', () {
+      provider.input('1');
+      provider.input('2');
+      provider.input('3');
+      provider.backspace();
+      expect(provider.expression, '12');
+    });
+
+    test('divide by zero returns Error', () {
+      provider.input('6');
+      provider.input('÷');
+      provider.input('0');
+      provider.calculate();
+      expect(provider.result, 'Error');
+    });
+
+    test('calculation is saved to history', () {
+      provider.input('2');
+      provider.input('×');
+      provider.input('4');
+      provider.calculate();
+      expect(provider.history.last, '2×4 = 8');
     });
   });
 }

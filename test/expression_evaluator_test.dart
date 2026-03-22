@@ -1,18 +1,36 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_calculator/expression_parser.dart';
+import 'package:mobile_calculator/utils/expression_evaluator.dart';
 
 void main() {
-  test('Valid expression', () {
-    final result = parseExpression('3 + 5');
-    expect(result, 8);
+  late ExpressionEvaluator evaluator;
+
+  setUp(() {
+    evaluator = ExpressionEvaluator();
   });
 
-  test('Invalid expression', () {
-    expect(() => parseExpression('3 +'), throwsA(isA<FormatException>()));
-  });
+  group('ExpressionEvaluator Tests', () {
+    test('Valid simple expression', () {
+      expect(evaluator.evaluate('3+5'), 8);
+    });
 
-  test('Complex expression', () {
-    final result = parseExpression('2 * (3 + 5)');
-    expect(result, 16);
+    test('Expression with multiplication and addition', () {
+      expect(evaluator.evaluate('2*(3+5)'), 16);
+    });
+
+    test('Division', () {
+      expect(evaluator.evaluate('10/2'), 5);
+    });
+
+    test('Division symbol ÷', () {
+      expect(evaluator.evaluate('10÷2'), 5);
+    });
+
+    test('Multiplication symbol ×', () {
+      expect(evaluator.evaluate('3×4'), 12);
+    });
+
+    test('Invalid expression throws', () {
+      expect(() => evaluator.evaluate('3 +'), throwsA(anything));
+    });
   });
 }

@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "appTitle": "Mobile Calculator",
+  "calculatorTitle": "Calculator",
+  "historyTooltip": "History",
+  "scientificTooltip": "Scientific",
+  "settingsTooltip": "Settings",
+  "scientificCalculatorTitle": "Scientific Calculator",
+  "settingsTitle": "Settings",
+  "darkMode": "Dark Mode",
+  "calculationHistoryTitle": "Calculation History",
+  "historyItems": "{count, plural, one{1 item} other{{count} items}}",
+  "@historyItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noHistoryYet": "No history yet",
+  "historyWillAppear": "Your calculations will appear here."
+}

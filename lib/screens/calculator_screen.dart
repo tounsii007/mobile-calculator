@@ -1,93 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CalculatorScreen extends StatefulWidget {
-  @override
-  _CalculatorScreenState createState() => _CalculatorScreenState();
-}
+import '../l10n/app_localizations.dart';
+import '../providers/calculator_provider.dart';
+import '../widgets/display_widget.dart';
+import '../widgets/keypad_widget.dart';
+import '../widgets/memory_widget.dart';
+import 'history_screen.dart';
+import 'scientific_mode_screen.dart';
+import 'settings_screen.dart';
 
-class _CalculatorScreenState extends State<CalculatorScreen> {
-  String display = "0";
+class CalculatorScreen extends StatelessWidget {
+  const CalculatorScreen({Key? key}) : super(key: key);
 
-  void buttonPressed(String value) {
-    setState(() {
-      if (display == "0") {
-        display = value;
-      } else {
-        display += value;
-      }
-    });
-  }
-
-  void calculate() {
-    // Simple calculation logic goes here
-    try {
-      // Example: evaluate expression
-      // Note: Parsing logic is required here
-      // display = evaluateExpression(display);
-    } catch (e) {
-      display = 'Error';
+  void _handleButton(BuildContext context, String value) {
+    final p = context.read<CalculatorProvider>();
+    switch (value) {
+      case '=':
+        p.calculate();
+        break;
+      case 'C':
+        p.clear();
+        break;
+      case '⌫':
+        p.backspace();
+        break;
+      case '+/-':
+        p.toggleSign();
+        break;
+      case '%':
+        p.percentage();
+        break;
+      default:
+        p.input(value);
     }
-  }
-
-  void clear() {
-    setState(() {
-      display = "0";
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<CalculatorProvider>();
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculator'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Text(
-            display,
-            style: TextStyle(fontSize: 48),
+        title: Text(l10n.calculatorTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            tooltip: l10n.historyTooltip,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) =>
+                    HistoryScreen(calculations: provider.history.toList()),
+              ),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(onPressed: () => buttonPressed('1'), child: Text('1')), 
-              ElevatedButton(onPressed: () => buttonPressed('2'), child: Text('2')), 
-              ElevatedButton(onPressed: () => buttonPressed('3'), child: Text('3')), 
-              ElevatedButton(onPressed: () => buttonPressed('+'), child: Text('+')), 
-            ],
+          IconButton(
+            icon: const Icon(Icons.science),
+            tooltip: l10n.scientificTooltip,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ScientificModeScreen()),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(onPressed: () => buttonPressed('4'), child: Text('4')), 
-              ElevatedButton(onPressed: () => buttonPressed('5'), child: Text('5')), 
-              ElevatedButton(onPressed: () => buttonPressed('6'), child: Text('6')), 
-              ElevatedButton(onPressed: () => buttonPressed('-'), child: Text('-')), 
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(onPressed: () => buttonPressed('7'), child: Text('7')), 
-              ElevatedButton(onPressed: () => buttonPressed('8'), child: Text('8')), 
-              ElevatedButton(onPressed: () => buttonPressed('9'), child: Text('9')), 
-              ElevatedButton(onPressed: () => buttonPressed('*'), child: Text('*')), 
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(onPressed: clear, child: Text('C')), 
-              ElevatedButton(onPressed: () => buttonPressed('0'), child: Text('0')), 
-              ElevatedButton(onPressed: calculate, child: Text('=')), 
-              ElevatedButton(onPressed: () => buttonPressed('/'), child: Text('/')), 
-            ],
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: l10n.settingsTooltip,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+            ),
           ),
         ],
+      ),
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: DisplayWidget(
+                  currentInput: provider.expression.isEmpty
+                      ? provider.result
+                      : provider.expression,
+                  previousOperations:
+                      provider.expression.isEmpty ? '' : provider.result,
+                ),
+              ),
+            ),
+            const MemoryWidget(),
+            Expanded(
+              flex: 3,
+              child: KeypadWidget(
+                onButtonPressed: (value) => _handleButton(context, value),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-void main() => runApp(MaterialApp(home: CalculatorScreen()));

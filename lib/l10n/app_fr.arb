@@ -1,0 +1,22 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Calculatrice Mobile",
+  "calculatorTitle": "Calculatrice",
+  "historyTooltip": "Historique",
+  "scientificTooltip": "Scientifique",
+  "settingsTooltip": "Parametres",
+  "scientificCalculatorTitle": "Calculatrice Scientifique",
+  "settingsTitle": "Parametres",
+  "darkMode": "Mode sombre",
+  "calculationHistoryTitle": "Historique des calculs",
+  "historyItems": "{count, plural, one{1 element} other{{count} elements}}",
+  "@historyItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noHistoryYet": "Pas encore d'historique",
+  "historyWillAppear": "Vos calculs apparaitront ici."
+}

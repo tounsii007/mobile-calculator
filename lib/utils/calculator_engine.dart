@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 /// A calculator engine that performs basic and scientific calculations.
 class CalculatorEngine {
@@ -27,7 +27,7 @@ class CalculatorEngine {
 
   /// Calculates the power of a number.
   double power(double base, double exponent) {
-    return pow(base, exponent);
+    return math.pow(base, exponent).toDouble();
   }
 
   /// Calculates the square root of a number.
@@ -35,31 +35,31 @@ class CalculatorEngine {
     if (value < 0) {
       throw ArgumentError('Cannot take square root of a negative number.');
     }
-    return sqrt(value);
+    return math.sqrt(value);
   }
 
   /// Calculates the sine of an angle in radians.
   double sine(double angle) {
-    return sin(angle);
+    return math.sin(angle);
   }
 
   /// Calculates the cosine of an angle in radians.
   double cosine(double angle) {
-    return cos(angle);
+    return math.cos(angle);
   }
 
   /// Calculates the tangent of an angle in radians.
   double tangent(double angle) {
-    return tan(angle);
+    return math.tan(angle);
   }
 
   /// Converts degrees to radians.
   double degreesToRadians(double degrees) {
-    return degrees * (pi / 180);
+    return degrees * (math.pi / 180);
   }
 
   /// Converts radians to degrees.
   double radiansToDegrees(double radians) {
-    return radians * (180 / pi);
+    return radians * (180 / math.pi);
   }
 }
