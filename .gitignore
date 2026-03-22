@@ -1,0 +1,7 @@
+# Flutter/Dart
+.DS_Store
+.dart_tool/
+build/
+packages/.
+.pub-cache/
+.pub/
