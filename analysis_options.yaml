@@ -1,0 +1,12 @@
+# linting rules for Dart
+include: package:flutter_lints/flutter.yaml
+
+# Avoid unused imports
+unwanted_public_member_api: true
+
+# Set the minimum severity for warnings to lint
+linter:
+  rules:
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    # Add other rules as needed
